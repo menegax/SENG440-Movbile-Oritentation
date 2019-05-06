@@ -1,4 +1,17 @@
 <resources>
-    <string name="app_name">project2-team18</string>
+    <string name="app_name">The Chase!</string>
     <string name="title_activity_maps">Map</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Random User</string>
+    <string name="nav_header_subtitle">Welcome to The Chase!</string>
+    <string name="menu_goodbye">Goodbye!</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_map">Map</string>
+    <string name="menu_achievements">Achievements</string>
+    <string name="menu_photos">Photos</string>
+    <string name="dont_leave">No, don\'t leave!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
