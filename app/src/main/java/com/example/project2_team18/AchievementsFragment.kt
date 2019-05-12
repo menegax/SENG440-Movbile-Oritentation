@@ -3,6 +3,9 @@ package com.example.project2_team18
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +21,42 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class AchievementsFragment : Fragment() {
+    private var listener: OnListFragmentInteractionListener? = null
+    var achievements : MutableList<Achievement> = ArrayList<Achievement>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_achievements, container, false)
+
+        achievements.add(0, Achievement("MVP"))
+        achievements.add(1, Achievement("DPOY"))
+        achievements.add(2, Achievement("ROY"))
+
+        val view = inflater.inflate(R.layout.fragment_achievements_list, container, false)
+
+        //Set the adapter
+        if (view is RecyclerView) {
+            with(view) {
+                layoutManager = LinearLayoutManager(context)
+                adapter = MyAchievementRecyclerViewAdapter(achievements, listener)
+                val dividerItemDecoration = DividerItemDecoration(this.context, 1)
+                this.addItemDecoration(dividerItemDecoration)
+            }
+        }
+        return view
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this fragment to allow an interaction in this
+     * fragment to be communicated to the activity and potentially other fragments contained in that activity.
+     *
+     * See the Android Training lesson
+     * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
+     * for more information
+     */
+    interface OnListFragmentInteractionListener {
+        fun OnListFragmentInteraction(item: Achievement?)
     }
 
 
