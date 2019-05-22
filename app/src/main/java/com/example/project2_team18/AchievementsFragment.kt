@@ -29,9 +29,9 @@ class AchievementsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        achievements.add(0, Achievement("MVP"))
-        achievements.add(1, Achievement("DPOY"))
-        achievements.add(2, Achievement("ROY"))
+        achievements.add(0, Achievement("MVP", "Bronze"))
+        achievements.add(1, Achievement("DPOY", "Bronze"))
+        achievements.add(2, Achievement("ROY", "Bronze"))
 
         val view = inflater.inflate(R.layout.fragment_achievements_list, container, false)
 

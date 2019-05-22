@@ -45,6 +45,7 @@ class MyAchievementRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
         holder.mTitle.text = item.title
+        holder.mStatus.text = item.status
         holder.isActive = selectedIndex == position
 
         with(holder.mView) {
@@ -57,6 +58,7 @@ class MyAchievementRecyclerViewAdapter(
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mImageView: ImageView = mView.achievementLogo
+        val mStatus: TextView = mView.achievementStatus
         val mTitle: TextView = mView.achievementTitle
 
         var isActive: Boolean = false
