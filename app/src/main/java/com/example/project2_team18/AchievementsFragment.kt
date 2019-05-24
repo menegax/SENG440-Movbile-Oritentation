@@ -2,10 +2,10 @@ package com.example.project2_team18
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +20,9 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class AchievementsFragment : Fragment() {
+class AchievementsFragment : androidx.fragment.app.Fragment() {
     private var listener: OnListFragmentInteractionListener? = null
-    var achievements : MutableList<Achievement> = ArrayList<Achievement>()
+    var achievements = arrayListOf<Achievement>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,11 +36,11 @@ class AchievementsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_achievements_list, container, false)
 
         //Set the adapter
-        if (view is RecyclerView) {
+        if (view is androidx.recyclerview.widget.RecyclerView) {
             with(view) {
-                layoutManager = LinearLayoutManager(context)
+                layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
                 adapter = MyAchievementRecyclerViewAdapter(achievements, listener)
-                val dividerItemDecoration = DividerItemDecoration(this.context, 1)
+                val dividerItemDecoration = androidx.recyclerview.widget.DividerItemDecoration(this.context, 1)
                 this.addItemDecoration(dividerItemDecoration)
             }
         }

@@ -2,7 +2,7 @@ package com.example.project2_team18
 
 import android.content.Context
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,15 +17,24 @@ import com.example.project2_team18.AchievementsFragment.OnListFragmentInteractio
  */
 class MyAchievementRecyclerViewAdapter(
 
-    private var mValues: MutableList<Achievement>,
+    var mValues: List<Achievement>,
     private val mListener: OnListFragmentInteractionListener?
 
-) : RecyclerView.Adapter<MyAchievementRecyclerViewAdapter.ViewHolder>() {
+) : androidx.recyclerview.widget.RecyclerView.Adapter<MyAchievementRecyclerViewAdapter.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener
     lateinit var context: Context
 
+    var database: AchievementDatabase? = null
+//        set(value) {
+//            field = value
+//            value?.let {
+//                LoadAchievementsTask(it, this).execute()
+//            }
+//        }
+
     init {
+        LoadDatabaseTask(this).execute()
         mOnClickListener = View.OnClickListener { v ->
             val item = v.tag as Achievement
             mListener?.OnListFragmentInteraction(item)
@@ -40,7 +49,7 @@ class MyAchievementRecyclerViewAdapter(
         return ViewHolder(view)
     }
 
-    private var selectedIndex: Int = RecyclerView.NO_POSITION
+    private var selectedIndex: Int = androidx.recyclerview.widget.RecyclerView.NO_POSITION
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
@@ -56,7 +65,7 @@ class MyAchievementRecyclerViewAdapter(
 
     override fun getItemCount(): Int = mValues.size
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+    inner class ViewHolder(val mView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(mView) {
         val mImageView: ImageView = mView.achievementLogo
         val mStatus: TextView = mView.achievementStatus
         val mTitle: TextView = mView.achievementTitle
@@ -70,4 +79,10 @@ class MyAchievementRecyclerViewAdapter(
             return super.toString() + " '" + mTitle.text + "'"
         }
     }
+
+//    fun insert(achievement: Achievement) {
+//        mValues.add(achievement)
+//        selectedIndex = mValues.size - 1
+//        notifyItemInserted(mValues.size - 1)
+//    }
 }

@@ -1,5 +1,9 @@
 package com.example.project2_team18
 
-class Achievement(val title: String,
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "achievements")
+class Achievement(@PrimaryKey val title: String,
                   val status: String) {
 }
