@@ -17,14 +17,19 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp">
         <TextView android:id="@+id/achievementTitle"
                   android:layout_width="match_parent"
-                  android:layout_height="match_parent"
+                  android:layout_height="wrap_content"
                   android:text="Achievement"
-                  android:textSize="24sp"
-                  android:textAlignment="center"
+                  android:textSize="20sp"
+                  android:textAlignment="viewStart"
         />
+        <TextView android:text="Status"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/achievementStatus"
+                  android:textAlignment="viewEnd"/>
     </LinearLayout>
 </LinearLayout>
