@@ -6,19 +6,24 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.design.widget.Snackbar
-import android.support.design.widget.NavigationView
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.navigation.NavigationView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.room.Room
+import com.example.project2_team18.Models.AppDatabase
+import com.example.project2_team18.Models.User.User
+import com.example.project2_team18.Models.User.UserRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -47,6 +52,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            nav_view.setCheckedItem(R.id.nav_myBooks)
 //            toolbar.title = getString(R.string.menu_my_books)
 //        }
+
+        //Follow this https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+
+        val userRepository = UserRepository(applicationContext)
+
+//        val firstName = "Andy"
+//        val lastName = "French"
+//
+//        userRepository.insertUser(User(3, firstName, lastName))
+
+
+        val user = userRepository.getUser("Andy", "French")
+
+
 
     }
 
