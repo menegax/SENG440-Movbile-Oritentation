@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_achievement.view.*
 import com.example.project2_team18.AchievementsFragment.OnListFragmentInteractionListener
+import com.example.project2_team18.Models.Achievement.Achievement
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the specified
@@ -17,7 +18,7 @@ import com.example.project2_team18.AchievementsFragment.OnListFragmentInteractio
  */
 class MyAchievementRecyclerViewAdapter(
 
-    private var mValues: MutableList<Achievement>,
+    private var mValues: List<Achievement>,
     private val mListener: OnListFragmentInteractionListener?
 
 ) : RecyclerView.Adapter<MyAchievementRecyclerViewAdapter.ViewHolder>() {

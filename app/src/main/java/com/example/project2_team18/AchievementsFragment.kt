@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.project2_team18.Models.Achievement.Achievement
+import com.example.project2_team18.Models.Achievement.AchievementRepository
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,16 +24,14 @@ private const val ARG_PARAM2 = "param2"
  */
 class AchievementsFragment : Fragment() {
     private var listener: OnListFragmentInteractionListener? = null
-    var achievements : MutableList<Achievement> = ArrayList<Achievement>()
+    var achievements : List<Achievement> = ArrayList<Achievement>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        achievements.add(0, Achievement("MVP", "Bronze"))
-        achievements.add(1, Achievement("DPOY", "Bronze"))
-        achievements.add(2, Achievement("ROY", "Bronze"))
+        val achievementRepository = AchievementRepository(this.context!!)
+        achievements = achievementRepository.getAllAchievements()
 
         val view = inflater.inflate(R.layout.fragment_achievements_list, container, false)
 

@@ -21,6 +21,8 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.room.Room
+import com.example.project2_team18.Models.Achievement.Achievement
+import com.example.project2_team18.Models.Achievement.AchievementRepository
 import com.example.project2_team18.Models.AppDatabase
 import com.example.project2_team18.Models.User.User
 import com.example.project2_team18.Models.User.UserRepository
@@ -56,6 +58,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Follow this https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 
         val userRepository = UserRepository(applicationContext)
+        val achievementRepository = AchievementRepository(applicationContext)
+
+//        achievementRepository.insertAchievement(Achievement("Erskine", "Bronze"))
+//        achievementRepository.insertAchievement(Achievement("Engineering Core", "Bronze"))
 //
 //        val firstName = "Andy"
 //        val lastName = "French"
@@ -64,6 +70,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
 //        val user = userRepository.getUser("Andy", "French")
+
+
 
 
 
