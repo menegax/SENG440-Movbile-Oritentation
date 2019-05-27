@@ -56,11 +56,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Follow this https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 
         val userRepository = UserRepository(applicationContext)
-
-        val firstName = "Andy"
-        val lastName = "French"
-
-        userRepository.insertUser(User(3, firstName, lastName))
+//
+//        val firstName = "Andy"
+//        val lastName = "French"
+//
+//        userRepository.insertUser(User(3, firstName, lastName))
 
 
 //        val user = userRepository.getUser("Andy", "French")
