@@ -57,13 +57,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val userRepository = UserRepository(applicationContext)
 
-//        val firstName = "Andy"
-//        val lastName = "French"
-//
-//        userRepository.insertUser(User(3, firstName, lastName))
+        val firstName = "Andy"
+        val lastName = "French"
+
+        userRepository.insertUser(User(3, firstName, lastName))
 
 
-        val user = userRepository.getUser("Andy", "French")
+//        val user = userRepository.getUser("Andy", "French")
 
 
 

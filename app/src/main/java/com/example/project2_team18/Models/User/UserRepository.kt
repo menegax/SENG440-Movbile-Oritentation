@@ -17,8 +17,15 @@ class UserRepository(context: Context) {
         appDatabase = Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME).build()
     }
 
-    fun getUser(firstName: String, lastName: String): LiveData<User>? {
-        return appDatabase.userDao().findByName(firstName, lastName)
+    fun getUser(firstName: String, lastName: String): User? {
+
+        val response = object : AsyncTask<Void, Void, User>() {
+            override fun doInBackground(vararg voids: Void): User? {
+                val andy = appDatabase.userDao().findByName(firstName, lastName)
+                return andy
+            }
+        }.execute()
+        return response.get()
 
     }
 
@@ -31,31 +38,7 @@ class UserRepository(context: Context) {
         }.execute()
     }
 
-//    @JvmOverloads
-//    fun insertTask(
-//        title: String,
-//        description: String,
-//        encrypt: Boolean = false,
-//        password: String? = null
-//    ) {
-//
-//        val note = Note()
-//        note.setTitle(title)
-//        note.setDescription(description)
-//        note.setCreatedAt(AppUtils.getCurrentDateTime())
-//        note.setModifiedAt(AppUtils.getCurrentDateTime())
-//        note.setEncrypt(encrypt)
-//
-//
-//        if (encrypt) {
-//            note.setPassword(AppUtils.generateHash(password))
-//        } else
-//            note.setPassword(null)
-//
-//        insertTask(note)
-//    }
-//
-//
+
 //    fun updateTask(note: Note) {
 //        note.setModifiedAt(AppUtils.getCurrentDateTime())
 //
