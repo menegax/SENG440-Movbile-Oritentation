@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import android.provider.MediaStore
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.core.app.ActivityOptionsCompat
@@ -27,7 +28,7 @@ import com.example.project2_team18.Models.AppDatabase
 import com.example.project2_team18.Models.User.User
 import com.example.project2_team18.Models.User.UserRepository
 import kotlinx.android.synthetic.main.activity_main.*
-
+import kotlinx.android.synthetic.main.nav_header_main.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -71,10 +72,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 //        val user = userRepository.getUser("Andy", "French")
 
-
-
-
-
     }
 
 
@@ -107,7 +104,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_photos -> {
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, PhotosFragment()).commit()
-                toolbar.title = getString(R.string.menu_achievements)
+                toolbar.title = getString(R.string.menu_photos)
             }
             R.id.nav_logout -> {
                 Toast.makeText(this, getString(R.string.dont_leave), Toast.LENGTH_LONG).show()
@@ -139,6 +136,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //
 //        }
 //    }
+
 
     override fun onStop() {
         super.onStop()
