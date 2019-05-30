@@ -78,10 +78,11 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
      * Equirectangular distance estimation
      */
     fun checkIfLocationWithinZone(currentLocation: LatLng, zoneCenter: LatLng, zoneRadius: Int): Boolean {
+        val R = 6371000.0 // Radius of the earth in m
         val x = (zoneCenter.longitude - currentLocation.longitude) *
                 Math.cos((currentLocation.latitude + zoneCenter.latitude) / 2)
         val y = zoneCenter.latitude - currentLocation.latitude
-        val distanceBetweenPoints = Math.sqrt(x * x + y * y) * zoneRadius
+        val distanceBetweenPoints = Math.sqrt(x * x + y * y) * R
 
         return distanceBetweenPoints < zoneRadius
     }
