@@ -15,8 +15,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    val REDRAW_REQUEST = 1  // The request code
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,30 +30,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        //TODO Sets the start fragment
-//        if(savedInstanceState == null) {
-//
-//            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, BookFragment()).commit()
-//            nav_view.setCheckedItem(R.id.nav_myBooks)
-//            toolbar.title = getString(R.string.menu_my_books)
-//        }
-
-        //Follow this https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
-
-        val userRepository = UserRepository(applicationContext)
-        val achievementRepository =
-            AchievementRepository(applicationContext)
-
-//        achievementRepository.insertAchievement(Achievement("Erskine", "Bronze"))
-//        achievementRepository.insertAchievement(Achievement("Engineering Core", "Bronze"))
-//
-//        val firstName = "Andy"
-//        val lastName = "French"
-//
-//        userRepository.insertUser(User(3, firstName, lastName))
-
-
-//        val user = userRepository.getUser("Andy", "French")
+        if(savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.fragment_container,
+                CustomMapsFragment()
+            ).commit()
+            nav_view.setCheckedItem(R.id.nav_map)
+            toolbar.title = getString(R.string.menu_map)
+        }
 
     }
 

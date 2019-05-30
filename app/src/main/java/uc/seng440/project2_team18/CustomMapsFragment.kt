@@ -21,6 +21,10 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.CircleOptions
+import com.google.android.gms.maps.model.Circle
+
+
 
 
 
@@ -68,6 +72,14 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
             .position(erskine)
             .title("Jack Erskine")
             .icon(vectorToBitmap(R.drawable.ic_achievements, Color.parseColor("#CFB53B")))
+        )
+
+        val circle = mMap.addCircle(
+            CircleOptions()
+                .center(erskine)
+                .radius(2.5)
+                .strokeColor(Color.RED)
+                .fillColor(0x222b2b2b)
         )
         mMap.moveCamera(CameraUpdateFactory.newLatLng(erskine))
         mMap.moveCamera(CameraUpdateFactory.zoomTo(20.0f))
