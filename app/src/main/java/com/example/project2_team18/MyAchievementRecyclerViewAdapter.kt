@@ -47,6 +47,7 @@ class MyAchievementRecyclerViewAdapter(
         val item = mValues[position]
         holder.mTitle.text = item.title
         holder.mStatus.text = item.status
+        holder.mDescription.text = item.description
         holder.isActive = selectedIndex == position
 
         with(holder.mView) {
@@ -60,6 +61,7 @@ class MyAchievementRecyclerViewAdapter(
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mImageView: ImageView = mView.achievementLogo
         val mStatus: TextView = mView.achievementStatus
+        val mDescription: TextView = mView.achievementDescription
         val mTitle: TextView = mView.achievementTitle
 
         var isActive: Boolean = false

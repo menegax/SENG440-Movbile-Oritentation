@@ -1,34 +1,16 @@
 package com.example.project2_team18
 
-import android.app.Activity
-import android.app.ActivityOptions
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
-import android.provider.MediaStore
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.room.Room
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import com.example.project2_team18.Models.Achievement.Achievement
 import com.example.project2_team18.Models.Achievement.AchievementRepository
-import com.example.project2_team18.Models.AppDatabase
-import com.example.project2_team18.Models.User.User
-import com.example.project2_team18.Models.User.UserRepository
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -58,20 +40,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //Follow this https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 
-        val userRepository = UserRepository(applicationContext)
         val achievementRepository = AchievementRepository(applicationContext)
 
-//        achievementRepository.insertAchievement(Achievement("Erskine", "Bronze"))
-//        achievementRepository.insertAchievement(Achievement("Engineering Core", "Bronze"))
-//
-//        val firstName = "Andy"
-//        val lastName = "French"
-//
-//        userRepository.insertUser(User(3, firstName, lastName))
-
-
-//        val user = userRepository.getUser("Andy", "French")
-
+        if (achievementRepository.getAchievementByTitle("Recreation Centre").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Recreation Centre", "Bronze", "Let's go get fit!"))
+        }
+        if (achievementRepository.getAchievementByTitle("Foundry").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Foundry", "Bronze", "Thursday mono?"))
+        }
+        if (achievementRepository.getAchievementByTitle("Central Library").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Central Library", "Bronze", "Tallest building at UC?"))
+        }
+        if (achievementRepository.getAchievementByTitle("EPS Library").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("EPS Library", "Bronze", "Has the most STEM books!"))
+        }
+        if (achievementRepository.getAchievementByTitle("Macmillan Brown Library").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Macmillan Brown Library", "Bronze", "Find the cultural heritage collections."))
+        }
+        if (achievementRepository.getAchievementByTitle("The Book Shop").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("The Book Shop", "Bronze", "Let's purchase books and stationary?"))
+        }
+        if (achievementRepository.getAchievementByTitle("Meremere Building").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Meremere Building", "Bronze", "Old Law and commerce building?"))
+        }
+        if (achievementRepository.getAchievementByTitle("Erskine").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Erskine", "Bronze", "Where do the tech geniuses live?"))
+        }
+        if (achievementRepository.getAchievementByTitle("Engineering Core").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Engineering Core", "Bronze", "Most purple place on campus?"))
+        }
     }
 
 
