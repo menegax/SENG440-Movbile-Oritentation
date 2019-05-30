@@ -75,6 +75,18 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     /**
+     * Equirectangular distance estimation
+     */
+    fun checkIfLocationWithinZone(currentLocation: LatLng, zoneCenter: LatLng, zoneRadius: Int): Boolean {
+        val x = (zoneCenter.longitude - currentLocation.longitude) *
+                Math.cos((currentLocation.latitude + zoneCenter.latitude) / 2)
+        val y = zoneCenter.latitude - currentLocation.latitude
+        val distanceBetweenPoints = Math.sqrt(x * x + y * y) * zoneRadius
+
+        return distanceBetweenPoints < zoneRadius
+    }
+
+    /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
@@ -134,7 +146,7 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
             fusedLocationClient.requestLocationUpdates(
                 locationRequest,
                 locationCallback,
-                null /* Looper */
+                null
             )
         }
     }
