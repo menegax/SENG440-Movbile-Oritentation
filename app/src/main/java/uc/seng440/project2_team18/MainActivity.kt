@@ -3,23 +3,17 @@ package uc.seng440.project2_team18
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import com.example.project2_team18.Models.Achievement.Achievement
-import com.example.project2_team18.Models.Achievement.AchievementRepository
-import com.google.android.material.navigation.NavigationView
 import androidx.core.app.ActivityCompat
-import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
-import uc.seng440.project2_team18.Models.User.UserRepository
+import androidx.core.view.GravityCompat
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import uc.seng440.project2_team18.Models.Achievement.Achievement
+import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

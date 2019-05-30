@@ -4,13 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import uc.seng440.project2_team18.Models.Achievement.Achievement
 import uc.seng440.project2_team18.Models.Achievement.AchievementDao
-import uc.seng440.project2_team18.Models.User.User
-import uc.seng440.project2_team18.Models.User.UserDao
 
-@Database(entities = arrayOf(User::class, Achievement::class), version = 1)
-public abstract class AppDatabase : RoomDatabase() {
-
-    abstract fun userDao(): UserDao
+@Database(entities = [Achievement::class], version = 3)
+abstract class AppDatabase : RoomDatabase() {
     abstract fun achievementDao(): AchievementDao
-
 }
