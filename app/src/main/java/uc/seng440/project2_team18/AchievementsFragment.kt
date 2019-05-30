@@ -2,13 +2,13 @@ package uc.seng440.project2_team18
 
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import uc.seng440.project2_team18.Models.Achievement.Achievement
 import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
 
@@ -38,7 +38,7 @@ class AchievementsFragment : Fragment() {
         //Set the adapter
         if (view is RecyclerView) {
             with(view) {
-                layoutManager = LinearLayoutManager(context)
+                layoutManager = LinearLayoutManager(context) as RecyclerView.LayoutManager?
                 adapter = MyAchievementRecyclerViewAdapter(achievements, listener)
                 val dividerItemDecoration = DividerItemDecoration(this.context, 1)
                 this.addItemDecoration(dividerItemDecoration)

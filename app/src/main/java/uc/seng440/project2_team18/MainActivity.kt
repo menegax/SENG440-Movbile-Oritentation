@@ -3,17 +3,17 @@ package uc.seng440.project2_team18
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
-import uc.seng440.project2_team18.Models.User.UserRepository
+import androidx.core.view.GravityCompat
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import uc.seng440.project2_team18.Models.Achievement.Achievement
+import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -33,6 +33,45 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
+        //TODO Sets the start fragment
+//        if(savedInstanceState == null) {
+//
+//            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, BookFragment()).commit()
+//            nav_view.setCheckedItem(R.id.nav_myBooks)
+//            toolbar.title = getString(R.string.menu_my_books)
+//        }
+
+        //Follow this https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+
+        val achievementRepository = AchievementRepository(applicationContext)
+
+        if (achievementRepository.getAchievementByTitle("Recreation Centre").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Recreation Centre", "Bronze", "Let's go get fit!"))
+        }
+        if (achievementRepository.getAchievementByTitle("Foundry").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Foundry", "Bronze", "Thursday mono?"))
+        }
+        if (achievementRepository.getAchievementByTitle("Central Library").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Central Library", "Bronze", "Tallest building at UC?"))
+        }
+        if (achievementRepository.getAchievementByTitle("EPS Library").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("EPS Library", "Bronze", "Has the most STEM books!"))
+        }
+        if (achievementRepository.getAchievementByTitle("Macmillan Brown Library").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Macmillan Brown Library", "Bronze", "Find the cultural heritage collections."))
+        }
+        if (achievementRepository.getAchievementByTitle("The Book Shop").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("The Book Shop", "Bronze", "Let's purchase books and stationary?"))
+        }
+        if (achievementRepository.getAchievementByTitle("Meremere Building").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Meremere Building", "Bronze", "Old Law and commerce building?"))
+        }
+        if (achievementRepository.getAchievementByTitle("Erskine").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Erskine", "Bronze", "Where do the tech geniuses live?"))
+        }
+        if (achievementRepository.getAchievementByTitle("Engineering Core").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Engineering Core", "Bronze", "Most purple place on campus?"))
+        }
         if(savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(
                 R.id.fragment_container,
