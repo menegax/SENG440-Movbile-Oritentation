@@ -2,6 +2,7 @@ package uc.seng440.project2_team18
 
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -17,6 +18,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.location.Location
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
@@ -25,6 +27,7 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
@@ -52,6 +55,7 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var locationCallback: LocationCallback
     private var currentLocationMarker: Marker? = null
     private lateinit var currentPhotoPath: String
+    private var locationRadius : Int = 5
 
 
     override fun onCreateView(
@@ -71,11 +75,24 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
                     if (currentLocationMarker != null) {
                         currentLocationMarker?.remove()
                     }
+
+                    val currentLocation = LatLng(location.latitude, location.longitude)
+
                     currentLocationMarker = mMap.addMarker(MarkerOptions()
-                        .position(LatLng(location.latitude, location.longitude))
+                        .position(currentLocation)
                         .title("Current Location")
                     )
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude, location.longitude)))
+
+                    //TODO Poll all of the locations from the locations list and check if it is within zone of any of those
+                    //TODO When a user goes inside the location, update the ring to be green
+                    //TODO When a user goes inside the location, update the database to mention that they have been to that location
+                    //TODO When a user goes inside the location, update the database to see if they have achieved any achievements
+                    //TODO Make the pins look a little bit nicer
+
+                    if(checkIfLocationWithinZone(currentLocation, LatLng(-43.521632, 172.583712), locationRadius)) {
+                        takePictureMaybe()
+                    }
 
                 }
             }
@@ -84,20 +101,50 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
         val view = inflater.inflate(R.layout.activity_maps, container, false)
         val mMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mMapFragment?.getMapAsync(this)
+
         return view
+    }
+
+    fun takePictureMaybe() {
+        val alertDialog: AlertDialog? = activity?.let {
+            val builder = AlertDialog.Builder(it)
+            builder.apply {
+                setPositiveButton(R.string.photo_take_ok,
+                    DialogInterface.OnClickListener { dialog, id ->
+                        // User clicked OK button
+                        dispatchTakePictureIntent()
+                    })
+                setNegativeButton(R.string.photo_take_cancel,
+                    DialogInterface.OnClickListener { dialog, id ->
+                        // User cancelled the dialog
+                    })
+            }
+            // Set other dialog properties
+            builder.setTitle(R.string.photo_take_title)
+            builder.setMessage(R.string.photo_take_description)
+            // Create the AlertDialog
+            builder.create()
+        }
+        alertDialog?.show()
+
     }
 
     /**
      * Equirectangular distance estimation
      */
     fun checkIfLocationWithinZone(currentLocation: LatLng, zoneCenter: LatLng, zoneRadius: Int): Boolean {
-        val R = 6371000.0 // Radius of the earth in m
-        val x = (zoneCenter.longitude - currentLocation.longitude) *
-                Math.cos((currentLocation.latitude + zoneCenter.latitude) / 2)
-        val y = zoneCenter.latitude - currentLocation.latitude
-        val distanceBetweenPoints = Math.sqrt(x * x + y * y) * R
 
-        return distanceBetweenPoints < zoneRadius
+        val loc1 = Location("")
+        loc1.setLatitude(zoneCenter.latitude)
+        loc1.setLongitude(zoneCenter.longitude)
+
+        val loc2 = Location("")
+        loc2.setLatitude(currentLocation.latitude)
+        loc2.setLongitude(currentLocation.longitude)
+
+        val distanceInMeters = loc1.distanceTo(loc2)
+
+        return distanceInMeters < zoneRadius
     }
 
     /**
@@ -122,8 +169,8 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
 
         val circle = mMap.addCircle(
             CircleOptions()
-                .center(erskine)
-                .radius(2.5)
+                .center(LatLng(-43.521632, 172.583712))
+                .radius(locationRadius.toDouble())
                 .strokeColor(Color.RED)
                 .fillColor(0x222b2b2b)
         )
@@ -148,6 +195,7 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     override fun onResume() {
         super.onResume()
         startLocationUpdates()
+        takePictureMaybe()
     }
 
     private fun startLocationUpdates() {
@@ -193,7 +241,7 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
                 photoFile?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
                         this.context!!,
-                        "com.example.project2_team18.fileprovider",
+                        "uc.seng440.project2_team18.fileprovider",
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)

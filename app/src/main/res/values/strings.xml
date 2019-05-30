@@ -13,5 +13,9 @@
     <string name="dont_leave">No, don\'t leave!</string>
     <string name="photo_upload_success">Photo successfully saved!</string>
     <string name="photo_upload_failure">Error saving photo.</string>
+    <string name="photo_take_ok">Take photo</string>
+    <string name="photo_take_cancel">Cancel</string>
+    <string name="photo_take_title">Congratulations!</string>
+    <string name="photo_take_description">You have arrived to a new location. Would you like to take a photo?</string>
 
 </resources>
