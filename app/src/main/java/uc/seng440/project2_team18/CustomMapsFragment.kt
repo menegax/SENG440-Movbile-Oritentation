@@ -1,6 +1,8 @@
 package uc.seng440.project2_team18
 
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,20 +12,17 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import androidx.core.graphics.drawable.DrawableCompat
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import com.google.android.gms.maps.model.BitmapDescriptor
-
-
-
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.*
+import com.google.android.gms.maps.model.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -38,11 +37,36 @@ private const val ARG_PARAM2 = "param2"
 class CustomMapsFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationCallback: LocationCallback
+    private var currentLocationMarker: Marker? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
+
+        currentLocationMarker = null
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?: return
+                for (location in locationResult.locations){
+                    Log.d("Buzz", location.toString())
+
+                    if (currentLocationMarker != null) {
+                        currentLocationMarker?.remove()
+                    }
+                    currentLocationMarker = mMap.addMarker(MarkerOptions()
+                        .position(LatLng(location.latitude, location.longitude))
+                        .title("Current Location")
+                    )
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude, location.longitude)))
+
+
+                }
+            }
+        }
 
         val view = inflater.inflate(R.layout.activity_maps, container, false)
         val mMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
@@ -84,6 +108,36 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
         DrawableCompat.setTint(vectorDrawable, color)
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startLocationUpdates()
+    }
+
+    private fun startLocationUpdates() {
+        val locationRequest: LocationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 5000
+        locationRequest.fastestInterval = 1000
+
+        if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                null /* Looper */
+            )
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+    }
+
+    private fun stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
 

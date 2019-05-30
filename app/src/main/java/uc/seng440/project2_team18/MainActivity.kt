@@ -1,5 +1,7 @@
 package uc.seng440.project2_team18
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import com.google.android.material.navigation.NavigationView
 import androidx.core.view.GravityCompat
@@ -8,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
 import uc.seng440.project2_team18.Models.User.UserRepository
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,6 +34,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            // Check permission
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 3)
+        }
 
         //TODO Sets the start fragment
 //        if(savedInstanceState == null) {
