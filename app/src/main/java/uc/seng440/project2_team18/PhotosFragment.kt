@@ -38,8 +38,6 @@ private const val ARG_PARAM2 = "param2"
 class PhotosFragment : Fragment() {
 
     private lateinit var carouselViewInstance: CarouselView
-    private lateinit var photoButton: Button
-    private lateinit var currentPhotoPath: String
     private lateinit var bitmaps : List<Bitmap>
 
     override fun onCreateView(
@@ -50,11 +48,6 @@ class PhotosFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_photos, container, false)
         val carouselView = (view as ViewGroup).getChildAt(0)
 
-        photoButton = view.findViewById(R.id.takePhotoButton)
-
-        photoButton.setOnClickListener {
-            dispatchTakePictureIntent()
-        }
 
         //Get all of the photos for the user
         loadImages()
@@ -88,57 +81,6 @@ class PhotosFragment : Fragment() {
 
     }
 
-    val REQUEST_IMAGE_CAPTURE = 1
-
-    private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            // Ensure that there's a camera activity to handle the intent
-            takePictureIntent.resolveActivity(this.context?.packageManager)?.also {
-                // Create the File where the photo should go
-                val photoFile: File? = try {
-                    createImageFile()
-                } catch (ex: IOException) {
-                    // Error occurred while creating the File
-                    Log.e("FILE IO EXCEPTION", "An error occurred while creating the File")
-                    null
-                }
-                // Continue only if the File was successfully created
-                photoFile?.also {
-                    val photoURI: Uri = FileProvider.getUriForFile(
-                        this.context!!,
-                        "com.example.project2_team18.fileprovider",
-                        it
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                }
-            }
-        }
-    }
-
-    @Throws(IOException::class)
-    private fun createImageFile(): File {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = this.context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
-        }
-    }
-
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
-            //TODO Reload the images
-
-        }
-    }
 
 
 }
