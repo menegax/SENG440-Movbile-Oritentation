@@ -1,4 +1,4 @@
-package com.example.project2_team18
+package uc.seng440.project2_team18
 
 
 import android.os.Bundle
@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project2_team18.Models.Achievement.Achievement
-import com.example.project2_team18.Models.Achievement.AchievementRepository
+import uc.seng440.project2_team18.Models.Achievement.Achievement
+import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
 
 
 // TODO: Rename parameter arguments, choose names that match

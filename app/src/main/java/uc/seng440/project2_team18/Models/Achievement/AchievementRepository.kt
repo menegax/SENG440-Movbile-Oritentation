@@ -1,4 +1,4 @@
-package com.example.project2_team18.Models.Achievement
+package uc.seng440.project2_team18.Models.Achievement
 
 import android.content.Context
 import android.os.AsyncTask
@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.example.project2_team18.Models.AppDatabase
 import com.example.project2_team18.migrations.Migration1To2
 import com.example.project2_team18.migrations.Migration2To3
+import uc.seng440.project2_team18.Models.AppDatabase
 
 
 class AchievementRepository(context: Context) {

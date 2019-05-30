@@ -1,4 +1,4 @@
-package com.example.project2_team18
+package uc.seng440.project2_team18
 
 import android.content.Context
 import android.graphics.Color
@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_achievement.view.*
-import com.example.project2_team18.AchievementsFragment.OnListFragmentInteractionListener
-import com.example.project2_team18.Models.Achievement.Achievement
+import uc.seng440.project2_team18.AchievementsFragment.OnListFragmentInteractionListener
+import uc.seng440.project2_team18.Models.Achievement.Achievement
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the specified

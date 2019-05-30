@@ -1,6 +1,12 @@
-package com.example.project2_team18
+package uc.seng440.project2_team18
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -10,12 +16,13 @@ import androidx.core.view.GravityCompat
 import com.example.project2_team18.Models.Achievement.Achievement
 import com.example.project2_team18.Models.Achievement.AchievementRepository
 import com.google.android.material.navigation.NavigationView
+import androidx.core.app.ActivityCompat
+import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
+import uc.seng440.project2_team18.Models.User.UserRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    val REDRAW_REQUEST = 1  // The request code
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +30,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout, toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
@@ -69,6 +78,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (achievementRepository.getAchievementByTitle("Engineering Core").isEmpty()) {
             achievementRepository.insertAchievement(Achievement("Engineering Core", "Bronze", "Most purple place on campus?"))
         }
+        if(savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.fragment_container,
+                CustomMapsFragment()
+            ).commit()
+            nav_view.setCheckedItem(R.id.nav_map)
+            toolbar.title = getString(R.string.menu_map)
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            // Check permission
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 3)
+        }
+
+
     }
 
 
@@ -92,15 +117,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (item.itemId) {
             R.id.nav_map -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, CustomMapsFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    CustomMapsFragment()
+                ).commit()
                 toolbar.title = getString(R.string.menu_map)
             }
             R.id.nav_achievements -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, AchievementsFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    AchievementsFragment()
+                ).commit()
                 toolbar.title = getString(R.string.menu_achievements)
             }
             R.id.nav_photos -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, PhotosFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    PhotosFragment()
+                ).commit()
                 toolbar.title = getString(R.string.menu_photos)
             }
             R.id.nav_logout -> {

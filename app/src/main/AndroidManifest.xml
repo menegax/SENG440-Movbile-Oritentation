@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.project2_team18">
+          package="uc.seng440.project2_team18">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -37,7 +37,7 @@
 
         <provider
                 android:name="androidx.core.content.FileProvider"
-                android:authorities="com.example.project2_team18.fileprovider"
+                android:authorities="uc.seng440.project2_team18.fileprovider"
                 android:exported="false"
                 android:grantUriPermissions="true">
             <meta-data
@@ -46,7 +46,7 @@
         </provider>
 
         <activity
-                android:name=".MainActivity"
+                android:name="uc.seng440.project2_team18.MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
