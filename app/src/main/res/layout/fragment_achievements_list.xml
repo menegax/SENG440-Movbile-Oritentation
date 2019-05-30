@@ -10,6 +10,6 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".AchievementsFragment"
+    tools:context="uc.seng440.project2_team18.AchievementsFragment"
     tools:listitem="@layout/fragment_achievement"
 />

@@ -1,4 +1,4 @@
-package com.example.project2_team18
+package uc.seng440.project2_team18
 
 
 import android.content.Intent
@@ -14,20 +14,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.google.android.gms.maps.GoogleMap
 import com.synnapps.carouselview.ImageListener
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 
 import com.synnapps.carouselview.CarouselView
-import kotlinx.android.synthetic.main.fragment_photos.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match

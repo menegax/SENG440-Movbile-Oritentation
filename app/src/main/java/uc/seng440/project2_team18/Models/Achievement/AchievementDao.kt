@@ -1,4 +1,4 @@
-package com.example.project2_team18.Models.Achievement
+package uc.seng440.project2_team18.Models.Achievement
 
 import androidx.room.Dao
 import androidx.room.Delete

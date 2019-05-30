@@ -1,6 +1,5 @@
-package com.example.project2_team18.Models.User
+package uc.seng440.project2_team18.Models.User
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert

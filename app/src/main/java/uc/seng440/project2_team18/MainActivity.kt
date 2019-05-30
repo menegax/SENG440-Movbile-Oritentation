@@ -1,34 +1,16 @@
-package com.example.project2_team18
+package uc.seng440.project2_team18
 
-import android.app.Activity
-import android.app.ActivityOptions
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
-import android.provider.MediaStore
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.room.Room
-import com.example.project2_team18.Models.Achievement.Achievement
-import com.example.project2_team18.Models.Achievement.AchievementRepository
-import com.example.project2_team18.Models.AppDatabase
-import com.example.project2_team18.Models.User.User
-import com.example.project2_team18.Models.User.UserRepository
+import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
+import uc.seng440.project2_team18.Models.User.UserRepository
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -41,7 +23,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout, toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
@@ -59,7 +43,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Follow this https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 
         val userRepository = UserRepository(applicationContext)
-        val achievementRepository = AchievementRepository(applicationContext)
+        val achievementRepository =
+            AchievementRepository(applicationContext)
 
 //        achievementRepository.insertAchievement(Achievement("Erskine", "Bronze"))
 //        achievementRepository.insertAchievement(Achievement("Engineering Core", "Bronze"))
@@ -95,15 +80,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (item.itemId) {
             R.id.nav_map -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, CustomMapsFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    CustomMapsFragment()
+                ).commit()
                 toolbar.title = getString(R.string.menu_map)
             }
             R.id.nav_achievements -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, AchievementsFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    AchievementsFragment()
+                ).commit()
                 toolbar.title = getString(R.string.menu_achievements)
             }
             R.id.nav_photos -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, PhotosFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    PhotosFragment()
+                ).commit()
                 toolbar.title = getString(R.string.menu_photos)
             }
             R.id.nav_logout -> {

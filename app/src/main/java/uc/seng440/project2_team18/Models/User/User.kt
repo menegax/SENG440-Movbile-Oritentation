@@ -1,4 +1,4 @@
-package com.example.project2_team18.Models.User
+package uc.seng440.project2_team18.Models.User
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,4 +1,4 @@
-package com.example.project2_team18
+package uc.seng440.project2_team18
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
