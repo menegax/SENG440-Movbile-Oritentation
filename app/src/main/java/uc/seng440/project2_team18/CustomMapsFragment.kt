@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.location.Location
@@ -76,9 +77,12 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
 
                     val currentLocation = LatLng(location.latitude, location.longitude)
 
+                    val flagIconBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context?.resources, R.drawable.ic_flag), 170, 170, false);
+
                     currentLocationMarker = mMap.addMarker(MarkerOptions()
                         .position(currentLocation)
                         .title("Current Location")
+                        .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
                     )
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude, location.longitude)))
 
