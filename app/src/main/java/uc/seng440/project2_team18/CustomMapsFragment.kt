@@ -54,7 +54,8 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var locationCallback: LocationCallback
     private var currentLocationMarker: Marker? = null
     private lateinit var currentPhotoPath: String
-    private var locationRadius : Int = 5
+    private var locationRadius : Int = 10
+    private lateinit var flagIconBitmap: Bitmap
 
 
     override fun onCreateView(
@@ -65,6 +66,9 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
 
         currentLocationMarker = null
+
+        flagIconBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context?.resources, R.drawable.ic_flag), 170, 170, false);
+
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
@@ -77,22 +81,24 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
 
                     val currentLocation = LatLng(location.latitude, location.longitude)
 
-                    val flagIconBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context?.resources, R.drawable.ic_flag), 170, 170, false);
-
-                    currentLocationMarker = mMap.addMarker(MarkerOptions()
-                        .position(currentLocation)
-                        .title("Current Location")
-                        .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
-                    )
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(location.latitude, location.longitude)))
-
-                    //TODO Poll all of the locations from the locations list and check if it is within zone of any of those
-                    //TODO When a user goes inside the location, update the ring to be green
-                    //TODO When a user goes inside the location, update the database to mention that they have been to that location
-                    //TODO When a user goes inside the location, update the database to see if they have achieved any achievements
-                    //TODO Make the pins look a little bit nicer
 
                     if(checkIfLocationWithinZone(currentLocation, LatLng(-43.521632, 172.583712), locationRadius)) {
+                        takePictureMaybe()
+                    }
+
+                    if(checkIfLocationWithinZone(currentLocation, LatLng(-43.522237, 172.580489), locationRadius)) {
+                        takePictureMaybe()
+                    }
+
+                    if(checkIfLocationWithinZone(currentLocation, LatLng(-43.522136, 172.581602), locationRadius)) {
+                        takePictureMaybe()
+                    }
+
+                    if(checkIfLocationWithinZone(currentLocation, LatLng(-43.522968, 172.580840), locationRadius)) {
+                        takePictureMaybe()
+                    }
+
+                    if(checkIfLocationWithinZone(currentLocation, LatLng(-43.522727, 172.581806), locationRadius)) {
                         takePictureMaybe()
                     }
 
@@ -162,14 +168,8 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val erskine = LatLng(-43.5225561, 172.5810676)
-        mMap.addMarker(MarkerOptions()
-            .position(erskine)
-            .title("Jack Erskine")
-            .icon(vectorToBitmap(R.drawable.ic_achievements, Color.parseColor("#CFB53B")))
-        )
 
-        val circle = mMap.addCircle(
+        mMap.addCircle(
             CircleOptions()
                 .center(LatLng(-43.521632, 172.583712))
                 .radius(locationRadius.toDouble())
@@ -177,8 +177,100 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
                 .fillColor(0x222b2b2b)
         )
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(erskine))
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(20.0f))
+        mMap.addMarker(MarkerOptions()
+            .position(LatLng(-43.521632, 172.583712))
+            .title("The Core")
+            .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
+        )
+
+        mMap.addCircle(
+            CircleOptions()
+                .center(LatLng(-43.522237, 172.580489))
+                .radius(locationRadius.toDouble())
+                .strokeColor(Color.RED)
+                .fillColor(0x222b2b2b)
+        )
+
+        mMap.addMarker(MarkerOptions()
+            .position(LatLng(-43.522237, 172.580489))
+            .title("Erskine 1")
+            .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
+        )
+
+        mMap.addCircle(
+            CircleOptions()
+                .center(LatLng(-43.522136, 172.581602))
+                .radius(locationRadius.toDouble())
+                .strokeColor(Color.RED)
+                .fillColor(0x222b2b2b)
+        )
+
+        mMap.addMarker(MarkerOptions()
+            .position(LatLng(-43.522136, 172.581602))
+            .title("Erskine 2")
+            .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
+        )
+
+        mMap.addCircle(
+            CircleOptions()
+                .center(LatLng(-43.522968, 172.580840))
+                .radius(locationRadius.toDouble())
+                .strokeColor(Color.RED)
+                .fillColor(0x222b2b2b)
+        )
+
+        mMap.addMarker(MarkerOptions()
+            .position(LatLng(-43.522968, 172.580840))
+            .title("Erskine 3")
+            .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
+        )
+
+        mMap.addCircle(
+            CircleOptions()
+                .center(LatLng(-43.522727, 172.581806))
+                .radius(locationRadius.toDouble())
+                .strokeColor(Color.RED)
+                .fillColor(0x222b2b2b)
+        )
+
+        mMap.addMarker(MarkerOptions()
+            .position(LatLng(-43.522727, 172.581806))
+            .title("Erskine 4")
+            .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
+        )
+
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(-43.522727, 172.581806)))
+        //mMap.moveCamera(CameraUpdateFactory.zoomTo(20.0f))
+
+        setUpMap(mMap)
+
+
+    }
+
+    private fun setUpMap(mMap: GoogleMap) {
+        if (ActivityCompat.checkSelfPermission(this.context!!,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this.activity!!.parent,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+
+        }
+        // 1
+        mMap.isMyLocationEnabled = true
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+
+            if (location != null) {
+                //lastLocation = location
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+            }
+        }
+
+    }
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
 
     private fun vectorToBitmap(@DrawableRes id: Int, @ColorInt color: Int): BitmapDescriptor {
@@ -197,7 +289,7 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     override fun onResume() {
         super.onResume()
         startLocationUpdates()
-        takePictureMaybe()
+        //takePictureMaybe()
     }
 
     private fun startLocationUpdates() {
