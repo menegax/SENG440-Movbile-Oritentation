@@ -35,6 +35,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
+import uc.seng440.project2_team18.Models.ChaseLocation.ChaseLocation
+import uc.seng440.project2_team18.Models.ChaseLocation.ChaseLocationRepository
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -53,7 +56,7 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var currentPhotoPath: String
     private var locationRadius: Int = 10
     private lateinit var flagIconBitmap: Bitmap
-    private lateinit var locationLatLngList: List<LatLng>
+    private lateinit var chaseLocationList: List<ChaseLocation>
     private lateinit var mapCircleList: MutableList<Circle>
 
 
@@ -76,15 +79,9 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
             false
         );
 
-        //TODO Load in all of the locations
-        //TODO For now just make them here but later from the database
-        val erskine1 = LatLng(-43.522237, 172.580489)
-        val erskine2 = LatLng(-43.522136, 172.581602)
-        val erskine3 = LatLng(-43.522968, 172.580840)
-        val erskine4 = LatLng(-43.522727, 172.581806)
-        val coreGreen = LatLng(-43.521115, 172.584184)
-        val coreInside = LatLng(-43.521641, 172.583711)
-        locationLatLngList = listOf(erskine1, erskine2, erskine3, erskine4, coreGreen)
+        val chaseLocationRepository = ChaseLocationRepository(this.context!!)
+        chaseLocationList = chaseLocationRepository.getAllChaseLocations()
+
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
@@ -98,15 +95,20 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
 
                     val currentLocation = LatLng(location.latitude, location.longitude)
 
-                    for (locationLatLng: LatLng in locationLatLngList) {
-                        if (checkIfLocationWithinZone(currentLocation, locationLatLng, locationRadius)) {
+                    for (chaseLocation: ChaseLocation in chaseLocationList) {
+
+                        val chaseLocationLatLng = LatLng(chaseLocation.latitude, chaseLocation.longitude)
+
+                        if (checkIfLocationWithinZone(currentLocation, chaseLocationLatLng, locationRadius)) {
                             takePictureMaybe()
 
-                            val circle = mapCircleList.filter { circle -> circle.center == locationLatLng }.single()
+                            val circle = mapCircleList.filter { circle -> circle.center == chaseLocationLatLng }.single()
                             circle.strokeColor = Color.GREEN
                             circle.fillColor = 0x223eb230
 
                             //TODO Update the database
+
+                            //TODO Update the local version of the list
 
                         }
                     }
@@ -183,21 +185,30 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
         //TODO - For every location in the location list,
         // create a new marker and circle and then add the circle to the circle list
 
-        for (locationLatLng: LatLng in locationLatLngList) {
+        for (chaseLocation: ChaseLocation in chaseLocationList) {
+
+            val chaseLocationLatLng = LatLng(chaseLocation.latitude, chaseLocation.longitude)
+
             val circle = mMap.addCircle(
                 CircleOptions()
-                    .center(locationLatLng)
+                    .center(chaseLocationLatLng)
                     .radius(locationRadius.toDouble())
-                    .strokeColor(Color.RED)
-                    .fillColor(0x222b2b2b)
             )
+
+            if(chaseLocation.visited) {
+                circle.strokeColor = Color.GREEN
+                circle.fillColor = 0x223eb230
+            } else {
+                circle.strokeColor = Color.RED
+                circle.fillColor = 0x222b2b2b
+            }
 
             mapCircleList.add(circle)
 
             mMap.addMarker(
                 MarkerOptions()
-                    .position(locationLatLng)
-                    .title("Erskine")
+                    .position(chaseLocationLatLng)
+                    .title(chaseLocation.title)
                     .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
             )
 

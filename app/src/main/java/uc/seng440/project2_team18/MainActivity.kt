@@ -10,10 +10,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import uc.seng440.project2_team18.Models.Achievement.Achievement
 import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
+import uc.seng440.project2_team18.Models.ChaseLocation.ChaseLocation
+import uc.seng440.project2_team18.Models.ChaseLocation.ChaseLocationRepository
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -33,16 +36,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        //TODO Sets the start fragment
-//        if(savedInstanceState == null) {
-//
-//            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, BookFragment()).commit()
-//            nav_view.setCheckedItem(R.id.nav_myBooks)
-//            toolbar.title = getString(R.string.menu_my_books)
-//        }
+        //Setup all of the Achievements
+        setupAchievements()
 
-        //Follow this https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+        //Setup all of the Locations
+        setupLocations()
 
+
+
+        if(savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.fragment_container,
+                CustomMapsFragment()
+            ).commit()
+            nav_view.setCheckedItem(R.id.nav_map)
+            toolbar.title = getString(R.string.menu_map)
+        }
+
+
+    }
+
+    fun setupAchievements() {
         val achievementRepository = AchievementRepository(applicationContext)
         achievementRepository.deleteAchievement("The True Engineer!")
         if (achievementRepository.getAchievementByTitle("Recreation Center").isEmpty()) {
@@ -75,22 +89,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (achievementRepository.getAchievementByTitle("The True Engineer!").isEmpty()) {
             achievementRepository.insertAchievement(Achievement("The True Engineer!", "Bronze", "Gold achievements: EPS, Erskine and core."))
         }
-        if(savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().replace(
-                R.id.fragment_container,
-                CustomMapsFragment()
-            ).commit()
-            nav_view.setCheckedItem(R.id.nav_map)
-            toolbar.title = getString(R.string.menu_map)
-        }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
-            // Check permission
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 3)
-        }
+    }
 
+    fun setupLocations() {
 
+        val chaseLocationRepository = ChaseLocationRepository(applicationContext)
+
+        val chaseLocationList = chaseLocationRepository.getAllChaseLocations()
+        if(chaseLocationList.isEmpty()) {
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Erskine 1", -43.522237, 172.580489, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Erskine 2", -43.522136, 172.581602, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Erskine 3", -43.522968, 172.580840, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Erskine 4", -43.522727, 172.581806, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Core Green", -43.521115, 172.584184, false))
+        }
     }
 
 

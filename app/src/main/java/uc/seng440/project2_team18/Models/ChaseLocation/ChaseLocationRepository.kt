@@ -1,4 +1,4 @@
-package uc.seng440.project2_team18.Models.Achievement
+package uc.seng440.project2_team18.Models.ChaseLocation
 
 import android.content.Context
 import android.os.AsyncTask
@@ -9,7 +9,7 @@ import uc.seng440.project2_team18.Models.AppDatabase
 import uc.seng440.project2_team18.migrations.Migration3To4
 
 
-class AchievementRepository(context: Context) {
+class ChaseLocationRepository(context: Context) {
 
     private val DB_NAME = "app_database"
 
@@ -26,48 +26,48 @@ class AchievementRepository(context: Context) {
             .addMigrations(MIGRATION_1_TO_2, MIGRATION_2_TO_3, MIGRATION_3_TO_4).build()
     }
 
-    fun getAllAchievements(): List<Achievement> {
-        val response = object : AsyncTask<Void, Void, List<Achievement>>() {
-            override fun doInBackground(vararg voids: Void): List<Achievement> {
-                val achievementList = appDatabase.achievementDao().getAll()
-                return achievementList
+    fun getAllChaseLocations(): List<ChaseLocation> {
+        val response = object : AsyncTask<Void, Void, List<ChaseLocation>>() {
+            override fun doInBackground(vararg voids: Void): List<ChaseLocation> {
+                val chaseLocationsList = appDatabase.chaseLocationDao().getAll()
+                return chaseLocationsList
             }
         }.execute()
         return response.get()
     }
 
-    fun getAchievementByTitle(title: String): List<Achievement> {
-        val response = object : AsyncTask<Void, Void, List<Achievement>>() {
-            override fun doInBackground(vararg voids: Void): List<Achievement> {
-                val achievementList = appDatabase.achievementDao().getByTitle(title)
-                return achievementList
+    fun getChaseLocationByTitle(title: String): List<ChaseLocation> {
+        val response = object : AsyncTask<Void, Void, List<ChaseLocation>>() {
+            override fun doInBackground(vararg voids: Void): List<ChaseLocation> {
+                val chaseLocationsList = appDatabase.chaseLocationDao().getByTitle(title)
+                return chaseLocationsList
             }
         }.execute()
         return response.get()
     }
 
-    fun insertAchievement(achievement: Achievement) {
+    fun insertChaseLocation(chaseLocation: ChaseLocation) {
         object : AsyncTask<Void, Void, Void>() {
             override fun doInBackground(vararg voids: Void): Void? {
-                appDatabase.achievementDao().insert(achievement)
+                appDatabase.chaseLocationDao().insert(chaseLocation)
                 return null
             }
         }.execute()
     }
 
-    fun updateAchievement(achievement: Achievement) {
+    fun updateChaseLocation(chaseLocation: ChaseLocation) {
         object : AsyncTask<Void, Void, Void>() {
             override fun doInBackground(vararg voids: Void?): Void? {
-                appDatabase.achievementDao().update(achievement)
+                appDatabase.chaseLocationDao().update(chaseLocation)
                 return null
             }
         }.execute()
     }
 
-    fun deleteAchievement(title: String) {
+    fun deleteChaseLocation(title: String) {
         object : AsyncTask<Void, Void, Void>() {
             override fun doInBackground(vararg voids: Void?): Void? {
-                appDatabase.achievementDao().delete(title)
+                appDatabase.chaseLocationDao().delete(title)
                 return null
             }
         }.execute()
