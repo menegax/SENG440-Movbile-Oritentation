@@ -97,19 +97,27 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
 
                     for (chaseLocation: ChaseLocation in chaseLocationList) {
 
-                        val chaseLocationLatLng = LatLng(chaseLocation.latitude, chaseLocation.longitude)
+                        if(!chaseLocation.visited) {
 
-                        if (checkIfLocationWithinZone(currentLocation, chaseLocationLatLng, locationRadius)) {
-                            takePictureMaybe()
+                            val chaseLocationLatLng = LatLng(chaseLocation.latitude, chaseLocation.longitude)
 
-                            val circle = mapCircleList.filter { circle -> circle.center == chaseLocationLatLng }.single()
-                            circle.strokeColor = Color.GREEN
-                            circle.fillColor = 0x223eb230
+                            if (checkIfLocationWithinZone(currentLocation, chaseLocationLatLng, locationRadius)) {
+                                takePictureMaybe()
 
-                            //TODO Update the database
+                                val circle =
+                                    mapCircleList.filter { circle -> circle.center == chaseLocationLatLng }.single()
+                                circle.strokeColor = Color.GREEN
+                                circle.fillColor = 0x223eb230
 
-                            //TODO Update the local version of the list
+                                //Update the database
 
+                                chaseLocationRepository.updateChaseLocation(chaseLocation.title)
+
+                                //Update the local version of the list
+
+                                chaseLocation.visited = true
+
+                            }
                         }
                     }
 
@@ -179,11 +187,6 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
-        // Add a marker in Sydney and move the camera
-
-        //TODO - For every location in the location list,
-        // create a new marker and circle and then add the circle to the circle list
 
         for (chaseLocation: ChaseLocation in chaseLocationList) {
 
@@ -266,7 +269,6 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     override fun onResume() {
         super.onResume()
         startLocationUpdates()
-        takePictureMaybe()
     }
 
     private fun startLocationUpdates() {

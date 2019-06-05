@@ -55,10 +55,10 @@ class ChaseLocationRepository(context: Context) {
         }.execute()
     }
 
-    fun updateChaseLocation(chaseLocation: ChaseLocation) {
+    fun updateChaseLocation(title: String) {
         object : AsyncTask<Void, Void, Void>() {
             override fun doInBackground(vararg voids: Void?): Void? {
-                appDatabase.chaseLocationDao().update(chaseLocation)
+                appDatabase.chaseLocationDao().update(title)
                 return null
             }
         }.execute()
