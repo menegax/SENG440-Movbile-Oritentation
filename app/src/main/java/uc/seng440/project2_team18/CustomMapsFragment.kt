@@ -1,6 +1,8 @@
 package uc.seng440.project2_team18
 
 import android.Manifest
+import android.app.Activity
+import android.app.Activity.RESULT_CANCELED
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -38,11 +40,6 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  *
@@ -54,8 +51,10 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var locationCallback: LocationCallback
     private var currentLocationMarker: Marker? = null
     private lateinit var currentPhotoPath: String
-    private var locationRadius : Int = 10
+    private var locationRadius: Int = 10
     private lateinit var flagIconBitmap: Bitmap
+    private lateinit var locationLatLngList: List<LatLng>
+    private lateinit var mapCircleList: MutableList<Circle>
 
 
     override fun onCreateView(
@@ -63,16 +62,34 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
 
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
 
         currentLocationMarker = null
 
-        flagIconBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context?.resources, R.drawable.ic_flag), 170, 170, false);
+        mapCircleList = mutableListOf()
+
+        flagIconBitmap = Bitmap.createScaledBitmap(
+            BitmapFactory.decodeResource(context?.resources, R.drawable.ic_flag),
+            170,
+            170,
+            false
+        );
+
+        //TODO Load in all of the locations
+        //TODO For now just make them here but later from the database
+        val erskine1 = LatLng(-43.522237, 172.580489)
+        val erskine2 = LatLng(-43.522136, 172.581602)
+        val erskine3 = LatLng(-43.522968, 172.580840)
+        val erskine4 = LatLng(-43.522727, 172.581806)
+        val coreGreen = LatLng(-43.521115, 172.584184)
+        val coreInside = LatLng(-43.521641, 172.583711)
+        locationLatLngList = listOf(erskine1, erskine2, erskine3, erskine4, coreGreen)
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
-                for (location in locationResult.locations){
+                for (location in locationResult.locations) {
                     Log.d("Buzz", location.toString())
 
                     if (currentLocationMarker != null) {
@@ -81,26 +98,19 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
 
                     val currentLocation = LatLng(location.latitude, location.longitude)
 
+                    for (locationLatLng: LatLng in locationLatLngList) {
+                        if (checkIfLocationWithinZone(currentLocation, locationLatLng, locationRadius)) {
+                            takePictureMaybe()
 
-                    if(checkIfLocationWithinZone(currentLocation, LatLng(-43.521632, 172.583712), locationRadius)) {
-                        takePictureMaybe()
+                            val circle = mapCircleList.filter { circle -> circle.center == locationLatLng }.single()
+                            circle.strokeColor = Color.GREEN
+                            circle.fillColor = 0x223eb230
+
+                            //TODO Update the database
+
+                        }
                     }
 
-                    if(checkIfLocationWithinZone(currentLocation, LatLng(-43.522237, 172.580489), locationRadius)) {
-                        takePictureMaybe()
-                    }
-
-                    if(checkIfLocationWithinZone(currentLocation, LatLng(-43.522136, 172.581602), locationRadius)) {
-                        takePictureMaybe()
-                    }
-
-                    if(checkIfLocationWithinZone(currentLocation, LatLng(-43.522968, 172.580840), locationRadius)) {
-                        takePictureMaybe()
-                    }
-
-                    if(checkIfLocationWithinZone(currentLocation, LatLng(-43.522727, 172.581806), locationRadius)) {
-                        takePictureMaybe()
-                    }
 
                 }
             }
@@ -114,6 +124,7 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun takePictureMaybe() {
+
         val alertDialog: AlertDialog? = activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
@@ -169,78 +180,28 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
 
         // Add a marker in Sydney and move the camera
 
-        mMap.addCircle(
-            CircleOptions()
-                .center(LatLng(-43.521632, 172.583712))
-                .radius(locationRadius.toDouble())
-                .strokeColor(Color.RED)
-                .fillColor(0x222b2b2b)
-        )
+        //TODO - For every location in the location list,
+        // create a new marker and circle and then add the circle to the circle list
 
-        mMap.addMarker(MarkerOptions()
-            .position(LatLng(-43.521632, 172.583712))
-            .title("The Core")
-            .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
-        )
+        for (locationLatLng: LatLng in locationLatLngList) {
+            val circle = mMap.addCircle(
+                CircleOptions()
+                    .center(locationLatLng)
+                    .radius(locationRadius.toDouble())
+                    .strokeColor(Color.RED)
+                    .fillColor(0x222b2b2b)
+            )
 
-        mMap.addCircle(
-            CircleOptions()
-                .center(LatLng(-43.522237, 172.580489))
-                .radius(locationRadius.toDouble())
-                .strokeColor(Color.RED)
-                .fillColor(0x222b2b2b)
-        )
+            mapCircleList.add(circle)
 
-        mMap.addMarker(MarkerOptions()
-            .position(LatLng(-43.522237, 172.580489))
-            .title("Erskine 1")
-            .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
-        )
+            mMap.addMarker(
+                MarkerOptions()
+                    .position(locationLatLng)
+                    .title("Erskine")
+                    .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
+            )
 
-        mMap.addCircle(
-            CircleOptions()
-                .center(LatLng(-43.522136, 172.581602))
-                .radius(locationRadius.toDouble())
-                .strokeColor(Color.RED)
-                .fillColor(0x222b2b2b)
-        )
-
-        mMap.addMarker(MarkerOptions()
-            .position(LatLng(-43.522136, 172.581602))
-            .title("Erskine 2")
-            .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
-        )
-
-        mMap.addCircle(
-            CircleOptions()
-                .center(LatLng(-43.522968, 172.580840))
-                .radius(locationRadius.toDouble())
-                .strokeColor(Color.RED)
-                .fillColor(0x222b2b2b)
-        )
-
-        mMap.addMarker(MarkerOptions()
-            .position(LatLng(-43.522968, 172.580840))
-            .title("Erskine 3")
-            .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
-        )
-
-        mMap.addCircle(
-            CircleOptions()
-                .center(LatLng(-43.522727, 172.581806))
-                .radius(locationRadius.toDouble())
-                .strokeColor(Color.RED)
-                .fillColor(0x222b2b2b)
-        )
-
-        mMap.addMarker(MarkerOptions()
-            .position(LatLng(-43.522727, 172.581806))
-            .title("Erskine 4")
-            .icon(BitmapDescriptorFactory.fromBitmap(flagIconBitmap))
-        )
-
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(-43.522727, 172.581806)))
-        //mMap.moveCamera(CameraUpdateFactory.zoomTo(20.0f))
+        }
 
         setUpMap(mMap)
 
@@ -248,14 +209,19 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun setUpMap(mMap: GoogleMap) {
-        if (ActivityCompat.checkSelfPermission(this.context!!,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                this.context!!,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
 
-            ActivityCompat.requestPermissions(this.activity!!.parent,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+            ActivityCompat.requestPermissions(
+                this.activity!!,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 200
+            )
 
         }
-        // 1
+
         mMap.isMyLocationEnabled = true
 
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
@@ -289,7 +255,7 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     override fun onResume() {
         super.onResume()
         startLocationUpdates()
-        //takePictureMaybe()
+        takePictureMaybe()
     }
 
     private fun startLocationUpdates() {
@@ -299,7 +265,8 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
         locationRequest.fastestInterval = 1000
 
         if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             fusedLocationClient.requestLocationUpdates(
                 locationRequest,
                 locationCallback,
@@ -320,6 +287,18 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     val REQUEST_IMAGE_CAPTURE = 1
 
     private fun dispatchTakePictureIntent() {
+        if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            ActivityCompat.requestPermissions(
+                activity!!,
+                arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 10
+            )
+
+        }
+
+
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(this.context?.packageManager)?.also {
@@ -345,15 +324,18 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE) {
-            if(resultCode == AppCompatActivity.RESULT_OK) {
-                Toast.makeText(this.context, getString(R.string.photo_upload_success), Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this.context, getString(R.string.photo_upload_failure), Toast.LENGTH_LONG).show()
-            }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
+        if(resultCode != RESULT_CANCELED) {
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                if (resultCode == AppCompatActivity.RESULT_OK) {
+                    Toast.makeText(this.context, getString(R.string.photo_upload_success), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this.context, getString(R.string.photo_upload_failure), Toast.LENGTH_LONG).show()
+                }
+            }
         }
+
     }
 
     @Throws(IOException::class)
