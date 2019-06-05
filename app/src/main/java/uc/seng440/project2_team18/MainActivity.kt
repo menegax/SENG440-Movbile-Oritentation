@@ -97,11 +97,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val chaseLocationList = chaseLocationRepository.getAllChaseLocations()
         if(chaseLocationList.isEmpty()) {
-            chaseLocationRepository.insertChaseLocation(ChaseLocation("Erskine 1", -43.522237, 172.580489, false))
-            chaseLocationRepository.insertChaseLocation(ChaseLocation("Erskine 2", -43.522136, 172.581602, false))
-            chaseLocationRepository.insertChaseLocation(ChaseLocation("Erskine 3", -43.522968, 172.580840, false))
-            chaseLocationRepository.insertChaseLocation(ChaseLocation("Erskine 4", -43.522727, 172.581806, false))
-            chaseLocationRepository.insertChaseLocation(ChaseLocation("Core Green", -43.521115, 172.584184, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Recreation Center", -43.527062, 172.584514, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Foundry", -43.525059, 172.580228, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Central Library", -43.523705, 172.582910, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("EPS Library", -43.521359, 172.584686, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Macmillan Brown Library", -43.523561, 172.585914, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("The Book Shop", -43.524226, 172.581896, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Meremere Building", -43.525093, 172.584331, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Erskine", -43.522565, 172.581180, false))
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("Engineering Core", -43.521516, 172.583814, false))
         }
     }
 
