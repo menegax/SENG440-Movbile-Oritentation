@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">The Chase!</string>
+    <string name="dont_leave">No, no te vayas!</string>
+    <string name="menu_achievements">Logros</string>
+    <string name="menu_goodbye">¡Adiós!</string>
+    <string name="menu_logout">" Cerrar sesión"</string>
+    <string name="menu_map">Mapa</string>
+    <string name="menu_photos">Las fotos</string>
+    <string name="nav_header_subtitle">" ¡Bienvenido a The Chase!"</string>
+    <string name="nav_header_title">Usuario Aleatorio</string>
+    <string name="navigation_drawer_close">Cerrar el cajon de navegacion</string>
+    <string name="navigation_drawer_open">Abrir el cajon de navegacion</string>
+    <string name="photo_take_cancel">" Cancelar"</string>
+    <string name="photo_take_description">Has llegado a una nueva ubicación. ¿Te gustaría hacer una foto?</string>
+    <string name="photo_take_ok">Tomar foto</string>
+    <string name="photo_take_title">" ¡Felicidades!"</string>
+    <string name="photo_upload_failure">" Error al guardar la foto."</string>
+    <string name="photo_upload_success">Foto guardada con éxito!</string>
+    <string name="title_activity_maps">Mapa</string>
+    <string name="Bronze">Bronce</string>
+    <string name="Gold">Oro</string>
+    <string name="Silver">Plata</string>
+    <string name="central_library">¿El edificio más alto en la UC?</string>
+    <string name="engineering_core">¿El lugar más morado en el campus?</string>
+    <string name="eps_library">Tiene la mayoría de los libros STEM!</string>
+    <string name="erskine">" ¿Dónde viven los genios de la tecnología?"</string>
+    <string name="frother">Jueves mono?</string>
+    <string name="macmillan_brown_library">" Encuentra las colecciones del patrimonio cultural."</string>
+    <string name="meremere_building">¿Antigua ley y edificio de comercio?</string>
+    <string name="recreation_center">" ¡Vamos a ponernos en forma!"</string>
+    <string name="the_book_shop">" ¡Vamos a comprar libros y papelería!"</string>
+    <string name="the_true_engineer">Logros de oro: EPS, Erskine y Core.</string>
+</resources>

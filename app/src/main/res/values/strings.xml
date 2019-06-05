@@ -17,5 +17,19 @@
     <string name="photo_take_cancel">Cancel</string>
     <string name="photo_take_title">Congratulations!</string>
     <string name="photo_take_description">You have arrived to a new location. Would you like to take a photo?</string>
+    <string name="Bronze">Bronze</string>
+    <string name="Silver">Silver</string>
+    <string name="Gold">Gold</string>
+    <string name="recreation_center">Let\'s go get fit!</string>
+    <string name="frother">Thursday mono?</string>
+    <string name="central_library">Tallest building at UC?</string>
+    <string name="eps_library">Has the most STEM books!</string>
+    <string name="macmillan_brown_library">Find the cultural heritage collections.</string>
+    <string name="the_book_shop">Let\'s purchase books and stationary!</string>
+    <string name="meremere_building">Old Law and Commerce building?</string>
+    <string name="erskine">Where do the tech geniuses live?</string>
+    <string name="engineering_core">Most purple place on campus?</string>
+    <string name="the_true_engineer">Gold achievements: EPS, Erskine and core.</string>
+
 
 </resources>
