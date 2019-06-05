@@ -46,8 +46,26 @@ class MyAchievementRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
         holder.mTitle.text = item.title
-        holder.mStatus.text = item.status
-        holder.mDescription.text = item.description
+        val status: String = when {
+            item.status == "Gold" -> context.resources.getString(R.string.Gold)
+            item.status == "Silver" -> context.resources.getString(R.string.Silver)
+            else -> context.resources.getString(R.string.Bronze)
+        }
+        holder.mStatus.text = status
+        val description: String = when {
+            item.title == "Recreation Center" -> context.resources.getString(R.string.recreation_center)
+            item.title == "Frother!" -> context.resources.getString(R.string.frother)
+            item.title == "Central Library" -> context.resources.getString(R.string.central_library)
+            item.title == "EPS Library" -> context.resources.getString(R.string.eps_library)
+            item.title == "Macmillan Brown Library" -> context.resources.getString(R.string.macmillan_brown_library)
+            item.title == "The Book Shop" -> context.resources.getString(R.string.the_book_shop)
+            item.title == "Meremere Building" -> context.resources.getString(R.string.meremere_building)
+            item.title == "Erskine" -> context.resources.getString(R.string.erskine)
+            item.title == "Engineering Core" -> context.resources.getString(R.string.engineering_core)
+            item.title == "The True Engineer!" -> context.resources.getString(R.string.the_true_engineer)
+            else -> ""
+        }
+        holder.mDescription.text = description
         holder.isActive = selectedIndex == position
 
         with(holder.mView) {

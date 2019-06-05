@@ -44,12 +44,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Follow this https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
 
         val achievementRepository = AchievementRepository(applicationContext)
-
-        if (achievementRepository.getAchievementByTitle("Recreation Centre").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("Recreation Centre", "Bronze", "Let's go get fit!"))
+        achievementRepository.deleteAchievement("The True Engineer!")
+        if (achievementRepository.getAchievementByTitle("Recreation Center").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Recreation Center", "Bronze", "Let's go get fit!"))
         }
-        if (achievementRepository.getAchievementByTitle("Foundry").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("Foundry", "Bronze", "Thursday mono?"))
+        if (achievementRepository.getAchievementByTitle("Frother!").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("Frother!", "Bronze", "Thursday mono?"))
         }
         if (achievementRepository.getAchievementByTitle("Central Library").isEmpty()) {
             achievementRepository.insertAchievement(Achievement("Central Library", "Bronze", "Tallest building at UC?"))
@@ -64,13 +64,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             achievementRepository.insertAchievement(Achievement("The Book Shop", "Bronze", "Let's purchase books and stationary?"))
         }
         if (achievementRepository.getAchievementByTitle("Meremere Building").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("Meremere Building", "Bronze", "Old Law and commerce building?"))
+            achievementRepository.insertAchievement(Achievement("Meremere Building", "Bronze", "Old Law and Commerce building?"))
         }
         if (achievementRepository.getAchievementByTitle("Erskine").isEmpty()) {
             achievementRepository.insertAchievement(Achievement("Erskine", "Bronze", "Where do the tech geniuses live?"))
         }
         if (achievementRepository.getAchievementByTitle("Engineering Core").isEmpty()) {
             achievementRepository.insertAchievement(Achievement("Engineering Core", "Bronze", "Most purple place on campus?"))
+        }
+        if (achievementRepository.getAchievementByTitle("The True Engineer!").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("The True Engineer!", "Bronze", "Gold achievements: EPS, Erskine and core."))
         }
         if(savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(
