@@ -16,6 +16,6 @@ interface ChaseLocationDao{
     @Query("DELETE FROM ChaseLocation where title=:title")
     fun delete(title: String)
 
-    @Update
-    fun update(chaseLocations: ChaseLocation)
+    @Query("UPDATE ChaseLocation SET visited = 1 WHERE title=:title")
+    fun update(title: String)
 }

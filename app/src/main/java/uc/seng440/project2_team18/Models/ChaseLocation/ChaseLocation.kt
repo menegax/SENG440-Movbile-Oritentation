@@ -9,5 +9,5 @@ data class ChaseLocation(
     @PrimaryKey val title: String,
     val latitude: Double,
     val longitude: Double,
-    val visited: Boolean
+    var visited: Boolean
 )
