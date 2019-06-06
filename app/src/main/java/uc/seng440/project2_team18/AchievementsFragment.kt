@@ -37,6 +37,7 @@ class AchievementsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val achievementRepository = AchievementRepository(this.context!!)
+
         achievements = achievementRepository.getAllAchievements()
 
         val view = inflater.inflate(R.layout.fragment_achievements_list, container, false)

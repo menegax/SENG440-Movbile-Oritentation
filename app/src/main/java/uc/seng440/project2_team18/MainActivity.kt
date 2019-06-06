@@ -76,7 +76,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun setupAchievements() {
         val achievementRepository = AchievementRepository(applicationContext)
-        achievementRepository.deleteAchievement("The True Engineer!")
         if (achievementRepository.getAchievementByTitle("Recreation Center").isEmpty()) {
             achievementRepository.insertAchievement(Achievement("Recreation Center", "Bronze", "Let's go get fit!", false))
         }
