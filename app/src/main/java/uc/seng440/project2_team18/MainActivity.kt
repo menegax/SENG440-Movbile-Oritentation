@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+
+
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar,
             R.string.navigation_drawer_open,
@@ -42,18 +44,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Setup all of the Locations
         setupLocations()
 
-
-
-        if(savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().replace(
-                R.id.fragment_container,
-                CustomMapsFragment()
-            ).commit()
-            nav_view.setCheckedItem(R.id.nav_map)
-            toolbar.title = getString(R.string.menu_map)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 200
+            )
+        } else {
+            inflateMapView()
         }
+    }
 
+    fun inflateMapView() {
+        supportFragmentManager.beginTransaction().replace(
+            R.id.fragment_container,
+            CustomMapsFragment()
+        ).commit()
+        nav_view.setCheckedItem(R.id.nav_map)
+        toolbar.title = getString(R.string.menu_map)
+    }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == 200) {
+            inflateMapView()
+        }
     }
 
     fun setupAchievements() {

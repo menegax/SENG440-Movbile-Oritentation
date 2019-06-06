@@ -52,7 +52,6 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
-    private var currentLocationMarker: Marker? = null
     private lateinit var currentPhotoPath: String
     private var locationRadius: Int = 10
     private lateinit var flagIconBitmap: Bitmap
@@ -67,8 +66,6 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
 
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
-
-        currentLocationMarker = null
 
         mapCircleList = mutableListOf()
 
@@ -87,12 +84,6 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
                 for (location in locationResult.locations) {
-                    Log.d("Buzz", location.toString())
-
-                    if (currentLocationMarker != null) {
-                        currentLocationMarker?.remove()
-                    }
-
                     val currentLocation = LatLng(location.latitude, location.longitude)
 
                     for (chaseLocation: ChaseLocation in chaseLocationList) {
@@ -126,6 +117,8 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
+
+
         val view = inflater.inflate(R.layout.activity_maps, container, false)
         val mMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mMapFragment?.getMapAsync(this)
@@ -133,20 +126,23 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
         return view
     }
 
+
+
+
     fun takePictureMaybe() {
 
         val alertDialog: AlertDialog? = activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
-                setPositiveButton(R.string.photo_take_ok,
-                    DialogInterface.OnClickListener { dialog, id ->
-                        // User clicked OK button
-                        dispatchTakePictureIntent()
-                    })
-                setNegativeButton(R.string.photo_take_cancel,
-                    DialogInterface.OnClickListener { dialog, id ->
-                        // User cancelled the dialog
-                    })
+                setPositiveButton(R.string.photo_take_ok
+                ) { dialog, id ->
+                    // User clicked OK button
+                    dispatchTakePictureIntent()
+                }
+                setNegativeButton(R.string.photo_take_cancel
+                ) { dialog, id ->
+                    // User cancelled the dialog
+                }
             }
             // Set other dialog properties
             builder.setTitle(R.string.photo_take_title)
@@ -219,27 +215,15 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
 
         setUpMap(mMap)
 
-
     }
 
     private fun setUpMap(mMap: GoogleMap) {
-        if (ActivityCompat.checkSelfPermission(
-                this.context!!,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-
-            ActivityCompat.requestPermissions(
-                this.activity!!,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 200
-            )
-
-        }
 
         mMap.isMyLocationEnabled = true
+        mMap.uiSettings.isMyLocationButtonEnabled = true
+
 
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-
             if (location != null) {
                 //lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
