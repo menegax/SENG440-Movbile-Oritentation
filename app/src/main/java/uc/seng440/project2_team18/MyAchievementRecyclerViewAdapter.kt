@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_achievement.view.*
@@ -72,6 +75,22 @@ class MyAchievementRecyclerViewAdapter(
             tag = item
             setOnClickListener(mOnClickListener)
         }
+        spinImage(holder.mImageView)
+    }
+
+    fun spinImage(imageToAnimate: ImageView) {
+        val rotateAnimation = RotateAnimation(
+            0f, 360f,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_SELF, 0.5f
+        )
+
+        rotateAnimation.interpolator = LinearInterpolator()
+        rotateAnimation.duration = 1300
+        rotateAnimation.repeatCount = Animation.INFINITE
+
+        imageToAnimate.startAnimation(rotateAnimation)
+
     }
 
     override fun getItemCount(): Int = mValues.size
@@ -90,5 +109,10 @@ class MyAchievementRecyclerViewAdapter(
         override fun toString(): String {
             return super.toString() + " '" + mTitle.text + "'"
         }
+
+
+
+
+
     }
 }

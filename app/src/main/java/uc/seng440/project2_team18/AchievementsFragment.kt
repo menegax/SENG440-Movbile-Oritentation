@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +27,8 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class AchievementsFragment : Fragment() {
+
+
     private var listener: OnListFragmentInteractionListener? = null
     var achievements : List<Achievement> = ArrayList<Achievement>()
 
@@ -46,6 +52,7 @@ class AchievementsFragment : Fragment() {
         }
         return view
     }
+
 
     /**
      * This interface must be implemented by activities that contain this fragment to allow an interaction in this

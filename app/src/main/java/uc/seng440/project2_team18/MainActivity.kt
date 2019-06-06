@@ -5,6 +5,10 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +17,7 @@ import androidx.core.view.GravityCompat
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import uc.seng440.project2_team18.Models.Achievement.Achievement
 import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
 import uc.seng440.project2_team18.Models.ChaseLocation.ChaseLocation
@@ -25,6 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar,
@@ -42,18 +48,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Setup all of the Locations
         setupLocations()
 
-
-
-        if(savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().replace(
-                R.id.fragment_container,
-                CustomMapsFragment()
-            ).commit()
-            nav_view.setCheckedItem(R.id.nav_map)
-            toolbar.title = getString(R.string.menu_map)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 200
+            )
+        } else {
+            inflateMapView()
         }
+    }
 
+    fun inflateMapView() {
+        supportFragmentManager.beginTransaction().replace(
+            R.id.fragment_container,
+            CustomMapsFragment()
+        ).commit()
+        nav_view.setCheckedItem(R.id.nav_map)
+        toolbar.title = getString(R.string.menu_map)
+    }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == 200) {
+            inflateMapView()
+        }
     }
 
     fun setupAchievements() {
