@@ -53,7 +53,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 200
             )
         } else {
-            inflateMapView()
+            if(savedInstanceState == null) {
+                inflateMapView()
+            }
+
         }
     }
 
