@@ -66,6 +66,8 @@ class MyAchievementRecyclerViewAdapter(
             item.title == "Erskine" -> context.resources.getString(R.string.erskine)
             item.title == "Engineering Core" -> context.resources.getString(R.string.engineering_core)
             item.title == "The True Engineer!" -> context.resources.getString(R.string.the_true_engineer)
+            item.title == "The True Breather!" -> context.resources.getString(R.string.the_true_breather)
+            item.title == "The Shilling Club" -> context.resources.getString(R.string.the_shilling_club)
             else -> ""
         }
         holder.mDescription.text = description
@@ -75,7 +77,10 @@ class MyAchievementRecyclerViewAdapter(
             tag = item
             setOnClickListener(mOnClickListener)
         }
-        spinImage(holder.mImageView)
+        if (item.achieved) {
+            spinImage(holder.mImageView)
+            holder.mImageView.setColorFilter(Color.parseColor("#CFB53B"))
+        }
     }
 
     fun spinImage(imageToAnimate: ImageView) {

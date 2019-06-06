@@ -119,18 +119,27 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
             }
 
             private fun updateAchievement(title: String) {
-                when {
-                    title == "Recreation Center" -> achievementRepository.updateAchievement("Recreation Center")
-                    title == "Foundry" -> achievementRepository.updateAchievement("Frother!")
-                    title == "Central Library" -> achievementRepository.updateAchievement("Central Library")
-                    title == "EPS Library" -> achievementRepository.updateAchievement("EPS Library")
-                    title == "Macmillan Brown Library" -> achievementRepository.updateAchievement("Macmillan Brown Library")
-                    title == "The Book Shop" -> achievementRepository.updateAchievement("The Book Shop")
-                    title == "Meremere Building" -> achievementRepository.updateAchievement("Meremere Building")
-                    title == "Erskine" -> achievementRepository.updateAchievement("Erskine")
-                    title == "Engineering Core" -> achievementRepository.updateAchievement("Engineering Core")
+                when (title) {
+                    "Recreation Center" -> achievementRepository.updateAchievement("Recreation Center")
+                    "Foundry" -> achievementRepository.updateAchievement("Frother!")
+                    "Central Library" -> achievementRepository.updateAchievement("Central Library")
+                    "EPS Library" -> achievementRepository.updateAchievement("EPS Library")
+                    "Macmillan Brown Library" -> achievementRepository.updateAchievement("Macmillan Brown Library")
+                    "The Book Shop" -> achievementRepository.updateAchievement("The Book Shop")
+                    "Meremere Building" -> achievementRepository.updateAchievement("Meremere Building")
+                    "Erskine" -> achievementRepository.updateAchievement("Erskine")
+                    "Engineering Core" -> achievementRepository.updateAchievement("Engineering Core")
+                    "The Shilling Club" -> achievementRepository.updateAchievement("The Shilling Club")
                 }
-//                item.title == "The True Engineer!" -> context.resources.getString(R.string.the_true_engineer)
+                if (achievementRepository.getAchievementByTitle("EPS Library")[0].achieved
+                    && achievementRepository.getAchievementByTitle("Erskine")[0].achieved
+                    && achievementRepository.getAchievementByTitle("Engineering Core")[0].achieved) {
+                    achievementRepository.updateAchievement("The True Engineer!")
+                }
+                if (achievementRepository.getAchievementByTitle("The Shilling Club")[0].achieved
+                    && achievementRepository.getAchievementByTitle("Foundry")[0].achieved) {
+                    achievementRepository.updateAchievement("The True Breather!")
+                }
             }
         }
 

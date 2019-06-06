@@ -105,16 +105,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             achievementRepository.insertAchievement(Achievement("Engineering Core", "Bronze", "Most purple place on campus?", false))
         }
         if (achievementRepository.getAchievementByTitle("The True Engineer!").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("The True Engineer!", "Gold", "Gold achievements: EPS, Erskine and core.", false))
+            achievementRepository.insertAchievement(Achievement("The True Engineer!", "Gold", "Achievements: EPS, Erskine and Core.", false))
+        }
+        if (achievementRepository.getAchievementByTitle("The Shilling Club").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("The Shilling Club", "Bronze", "Classy beverage in the undercroft?", false))
+        }
+        if (achievementRepository.getAchievementByTitle("The True Breather!").isEmpty()) {
+            achievementRepository.insertAchievement(Achievement("The True Breather!", "Silver", "Achievements: Shilling club and Foundry.", false))
         }
     }
 
     fun setupLocations() {
 
         val chaseLocationRepository = ChaseLocationRepository(applicationContext)
-
         val chaseLocationList = chaseLocationRepository.getAllChaseLocations()
         if(chaseLocationList.isEmpty()) {
+            chaseLocationRepository.insertChaseLocation(ChaseLocation("The Shilling Club", -43.523469, 172.582599, false))
             chaseLocationRepository.insertChaseLocation(ChaseLocation("Recreation Center", -43.527062, 172.584514, false))
             chaseLocationRepository.insertChaseLocation(ChaseLocation("Foundry", -43.525059, 172.580228, false))
             chaseLocationRepository.insertChaseLocation(ChaseLocation("Central Library", -43.523705, 172.582910, false))
