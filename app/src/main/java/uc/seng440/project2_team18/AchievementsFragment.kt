@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +27,8 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class AchievementsFragment : Fragment() {
+
+
     private var listener: OnListFragmentInteractionListener? = null
     var achievements : List<Achievement> = ArrayList<Achievement>()
 
@@ -45,6 +51,20 @@ class AchievementsFragment : Fragment() {
             }
         }
         return view
+    }
+
+    fun spinImage(imageToAnimate: ImageView) {
+        val rotateAnimation = RotateAnimation(
+            0f, 360f,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_SELF, 0.5f
+        )
+
+        rotateAnimation.interpolator = LinearInterpolator()
+        rotateAnimation.duration = 1300
+        rotateAnimation.repeatCount = Animation.INFINITE
+
+        imageToAnimate.startAnimation(rotateAnimation)
     }
 
     /**
