@@ -80,6 +80,7 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
         );
 
         val chaseLocationRepository = ChaseLocationRepository(this.context!!)
+        val achievementRepository = AchievementRepository(this.context!!)
         chaseLocationList = chaseLocationRepository.getAllChaseLocations()
 
 
@@ -112,6 +113,7 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
                                 //Update the database
 
                                 chaseLocationRepository.updateChaseLocation(chaseLocation.title)
+                                updateAchievement(chaseLocation.title)
 
                                 //Update the local version of the list
 
@@ -123,6 +125,21 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
 
 
                 }
+            }
+
+            private fun updateAchievement(title: String) {
+                when {
+                    title == "Recreation Center" -> achievementRepository.updateAchievement("Recreation Center")
+                    title == "Foundry" -> achievementRepository.updateAchievement("Frother!")
+                    title == "Central Library" -> achievementRepository.updateAchievement("Central Library")
+                    title == "EPS Library" -> achievementRepository.updateAchievement("EPS Library")
+                    title == "Macmillan Brown Library" -> achievementRepository.updateAchievement("Macmillan Brown Library")
+                    title == "The Book Shop" -> achievementRepository.updateAchievement("The Book Shop")
+                    title == "Meremere Building" -> achievementRepository.updateAchievement("Meremere Building")
+                    title == "Erskine" -> achievementRepository.updateAchievement("Erskine")
+                    title == "Engineering Core" -> achievementRepository.updateAchievement("Engineering Core")
+                }
+//                item.title == "The True Engineer!" -> context.resources.getString(R.string.the_true_engineer)
             }
         }
 

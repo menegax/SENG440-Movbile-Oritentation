@@ -60,34 +60,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val achievementRepository = AchievementRepository(applicationContext)
         achievementRepository.deleteAchievement("The True Engineer!")
         if (achievementRepository.getAchievementByTitle("Recreation Center").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("Recreation Center", "Bronze", "Let's go get fit!"))
+            achievementRepository.insertAchievement(Achievement("Recreation Center", "Bronze", "Let's go get fit!", false))
         }
         if (achievementRepository.getAchievementByTitle("Frother!").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("Frother!", "Bronze", "Thursday mono?"))
+            achievementRepository.insertAchievement(Achievement("Frother!", "Bronze", "Thursday mono?", false))
         }
         if (achievementRepository.getAchievementByTitle("Central Library").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("Central Library", "Bronze", "Tallest building at UC?"))
+            achievementRepository.insertAchievement(Achievement("Central Library", "Bronze", "Tallest building at UC?", false))
         }
         if (achievementRepository.getAchievementByTitle("EPS Library").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("EPS Library", "Bronze", "Has the most STEM books!"))
+            achievementRepository.insertAchievement(Achievement("EPS Library", "Bronze", "Has the most STEM books!", false))
         }
         if (achievementRepository.getAchievementByTitle("Macmillan Brown Library").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("Macmillan Brown Library", "Bronze", "Find the cultural heritage collections."))
+            achievementRepository.insertAchievement(Achievement("Macmillan Brown Library", "Bronze", "Find the cultural heritage collections.", false))
         }
         if (achievementRepository.getAchievementByTitle("The Book Shop").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("The Book Shop", "Bronze", "Let's purchase books and stationary?"))
+            achievementRepository.insertAchievement(Achievement("The Book Shop", "Bronze", "Let's purchase books and stationary?", false))
         }
         if (achievementRepository.getAchievementByTitle("Meremere Building").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("Meremere Building", "Bronze", "Old Law and Commerce building?"))
+            achievementRepository.insertAchievement(Achievement("Meremere Building", "Bronze", "Old Law and Commerce building?", false))
         }
         if (achievementRepository.getAchievementByTitle("Erskine").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("Erskine", "Bronze", "Where do the tech geniuses live?"))
+            achievementRepository.insertAchievement(Achievement("Erskine", "Bronze", "Where do the tech geniuses live?", false))
         }
         if (achievementRepository.getAchievementByTitle("Engineering Core").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("Engineering Core", "Bronze", "Most purple place on campus?"))
+            achievementRepository.insertAchievement(Achievement("Engineering Core", "Bronze", "Most purple place on campus?", false))
         }
         if (achievementRepository.getAchievementByTitle("The True Engineer!").isEmpty()) {
-            achievementRepository.insertAchievement(Achievement("The True Engineer!", "Bronze", "Gold achievements: EPS, Erskine and core."))
+            achievementRepository.insertAchievement(Achievement("The True Engineer!", "Gold", "Gold achievements: EPS, Erskine and core.", false))
         }
     }
 

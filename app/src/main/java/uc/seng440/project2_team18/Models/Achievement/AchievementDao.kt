@@ -16,6 +16,6 @@ interface AchievementDao {
     @Query("DELETE FROM achievement where title=:title")
     fun delete(title: String)
 
-    @Update
-    fun update(achievements: Achievement)
+    @Query("UPDATE Achievement SET status=1 WHERE title=:title")
+    fun update(title: String)
 }

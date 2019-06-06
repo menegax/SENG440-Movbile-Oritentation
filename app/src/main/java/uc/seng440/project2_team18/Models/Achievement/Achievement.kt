@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class Achievement(
     @PrimaryKey val title: String,
     val status: String,
-    val description: String
+    val description: String,
+    val achieved: Boolean
 )

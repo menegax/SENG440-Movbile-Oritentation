@@ -7,6 +7,7 @@ import com.example.project2_team18.migrations.Migration1To2
 import com.example.project2_team18.migrations.Migration2To3
 import uc.seng440.project2_team18.Models.AppDatabase
 import uc.seng440.project2_team18.migrations.Migration3To4
+import uc.seng440.project2_team18.migrations.Migration4To5
 
 
 class AchievementRepository(context: Context) {
@@ -19,11 +20,12 @@ class AchievementRepository(context: Context) {
         val MIGRATION_1_TO_2 = Migration1To2()
         val MIGRATION_2_TO_3 = Migration2To3()
         val MIGRATION_3_TO_4 = Migration3To4()
+        val MIGRATION_4_TO_5 = Migration4To5()
     }
 
     init {
         appDatabase = Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
-            .addMigrations(MIGRATION_1_TO_2, MIGRATION_2_TO_3, MIGRATION_3_TO_4).build()
+            .addMigrations(MIGRATION_1_TO_2, MIGRATION_2_TO_3, MIGRATION_3_TO_4, MIGRATION_4_TO_5).build()
     }
 
     fun getAllAchievements(): List<Achievement> {
@@ -55,10 +57,10 @@ class AchievementRepository(context: Context) {
         }.execute()
     }
 
-    fun updateAchievement(achievement: Achievement) {
+    fun updateAchievement(title: String) {
         object : AsyncTask<Void, Void, Void>() {
             override fun doInBackground(vararg voids: Void?): Void? {
-                appDatabase.achievementDao().update(achievement)
+                appDatabase.achievementDao().update(title)
                 return null
             }
         }.execute()
