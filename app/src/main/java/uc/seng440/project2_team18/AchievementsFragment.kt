@@ -53,19 +53,6 @@ class AchievementsFragment : Fragment() {
         return view
     }
 
-    fun spinImage(imageToAnimate: ImageView) {
-        val rotateAnimation = RotateAnimation(
-            0f, 360f,
-            Animation.RELATIVE_TO_SELF, 0.5f,
-            Animation.RELATIVE_TO_SELF, 0.5f
-        )
-
-        rotateAnimation.interpolator = LinearInterpolator()
-        rotateAnimation.duration = 1300
-        rotateAnimation.repeatCount = Animation.INFINITE
-
-        imageToAnimate.startAnimation(rotateAnimation)
-    }
 
     /**
      * This interface must be implemented by activities that contain this fragment to allow an interaction in this

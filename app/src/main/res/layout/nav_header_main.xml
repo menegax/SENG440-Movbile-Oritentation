@@ -18,7 +18,7 @@
             android:layout_height="91dp"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             app:srcCompat="@drawable/ic_chase_logo"
-            android:id="@+id/imageView"/>
+            android:id="@+id/dogLogo"/>
 
     <TextView
             android:layout_width="match_parent"

@@ -5,6 +5,10 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +17,7 @@ import androidx.core.view.GravityCompat
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import uc.seng440.project2_team18.Models.Achievement.Achievement
 import uc.seng440.project2_team18.Models.Achievement.AchievementRepository
 import uc.seng440.project2_team18.Models.ChaseLocation.ChaseLocation
@@ -25,7 +30,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
 
 
         val toggle = ActionBarDrawerToggle(
