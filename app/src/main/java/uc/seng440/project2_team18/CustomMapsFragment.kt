@@ -137,7 +137,7 @@ class CustomMapsFragment : Fragment(), OnMapReadyCallback {
                     achievementRepository.updateAchievement("The True Engineer!")
                 }
                 if (achievementRepository.getAchievementByTitle("The Shilling Club")[0].achieved
-                    && achievementRepository.getAchievementByTitle("Foundry")[0].achieved) {
+                    && achievementRepository.getAchievementByTitle("Frother!")[0].achieved) {
                     achievementRepository.updateAchievement("The True Breather!")
                 }
             }

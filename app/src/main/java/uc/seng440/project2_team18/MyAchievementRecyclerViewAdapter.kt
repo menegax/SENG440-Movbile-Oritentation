@@ -55,19 +55,19 @@ class MyAchievementRecyclerViewAdapter(
             else -> context.resources.getString(R.string.Bronze)
         }
         holder.mStatus.text = status
-        val description: String = when {
-            item.title == "Recreation Center" -> context.resources.getString(R.string.recreation_center)
-            item.title == "Frother!" -> context.resources.getString(R.string.frother)
-            item.title == "Central Library" -> context.resources.getString(R.string.central_library)
-            item.title == "EPS Library" -> context.resources.getString(R.string.eps_library)
-            item.title == "Macmillan Brown Library" -> context.resources.getString(R.string.macmillan_brown_library)
-            item.title == "The Book Shop" -> context.resources.getString(R.string.the_book_shop)
-            item.title == "Meremere Building" -> context.resources.getString(R.string.meremere_building)
-            item.title == "Erskine" -> context.resources.getString(R.string.erskine)
-            item.title == "Engineering Core" -> context.resources.getString(R.string.engineering_core)
-            item.title == "The True Engineer!" -> context.resources.getString(R.string.the_true_engineer)
-            item.title == "The True Breather!" -> context.resources.getString(R.string.the_true_breather)
-            item.title == "The Shilling Club" -> context.resources.getString(R.string.the_shilling_club)
+        val description: String = when (item.title) {
+            "Recreation Center" -> context.resources.getString(R.string.recreation_center)
+            "Frother!" -> context.resources.getString(R.string.frother)
+            "Central Library" -> context.resources.getString(R.string.central_library)
+            "EPS Library" -> context.resources.getString(R.string.eps_library)
+            "Macmillan Brown Library" -> context.resources.getString(R.string.macmillan_brown_library)
+            "The Book Shop" -> context.resources.getString(R.string.the_book_shop)
+            "Meremere Building" -> context.resources.getString(R.string.meremere_building)
+            "Erskine" -> context.resources.getString(R.string.erskine)
+            "Engineering Core" -> context.resources.getString(R.string.engineering_core)
+            "The True Engineer!" -> context.resources.getString(R.string.the_true_engineer)
+            "The True Breather!" -> context.resources.getString(R.string.the_true_breather)
+            "The Shilling Club" -> context.resources.getString(R.string.the_shilling_club)
             else -> ""
         }
         holder.mDescription.text = description
@@ -79,7 +79,11 @@ class MyAchievementRecyclerViewAdapter(
         }
         if (item.achieved) {
             spinImage(holder.mImageView)
-            holder.mImageView.setColorFilter(Color.parseColor("#CFB53B"))
+            when (item.status) {
+                "Silver" -> holder.mImageView.setColorFilter(Color.parseColor("#C0C0C0"))
+                "Gold" -> holder.mImageView.setColorFilter(Color.parseColor("#CFB53B"))
+                else -> holder.mImageView.setColorFilter(Color.parseColor("#CD7F32"))
+            }
         }
     }
 
